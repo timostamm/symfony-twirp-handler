@@ -8,7 +8,6 @@ use Example\SearchRequest;
 use Example\SearchResponse;
 use Example\SearchServiceInterface;
 use Exception;
-use LogicException;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\Test\TestLogger;
 use Symfony\Component\HttpFoundation\Request;
@@ -150,15 +149,15 @@ class TwirpHandlerTest extends TestCase
         $searchRequest = new SearchRequest([
             'text' => 'foo'
         ]);
-        $this->expectException(LogicException::class);
-        $this->expectExceptionMessage('search exception');
+        $this->expectException(TwirpError::class);
+        $this->expectExceptionMessage('Internal service error');
         $resolver = new ServiceResolver();
         $resolver->registerInstance(SearchServiceInterface::class, new SearchServiceException());
-        $handler = new HttpHandler($resolver);
+        $handler = new TwirpHandler($resolver);
         $handler->handle(
             'example.SearchService',
             'search',
-            Request::create('http://localhost', 'POST', [], [], [], [], $searchRequest->serializeToString())
+            Request::create('http://localhost', 'POST', [], [], [], ["CONTENT_TYPE" => "application/protobuf"], $searchRequest->serializeToString())
         );
     }
 

@@ -5,8 +5,6 @@ Symfony Twirp Handler
 Helps implementing Twirp in a Symfony application. 
 
 
-
-
 Lets say you have this service defined in a proto file:
 
 ```
