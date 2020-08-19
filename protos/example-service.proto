@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+package example;
+option php_namespace = "Example";
+option php_metadata_namespace = "Example\\Metadata";
+option php_generic_services = true;
+
+
+message SearchRequest {
+    string text = 1;
+}
+
+message SearchResponse {
+    repeated string hits = 1;
+}
+
+
+service SearchService {
+
+    rpc Search (SearchRequest) returns (SearchResponse);
+
+}
