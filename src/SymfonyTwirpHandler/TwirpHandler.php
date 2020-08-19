@@ -44,7 +44,7 @@ class TwirpHandler
         }
         $method = $service->findMethod($methodName, false);
         if (!$method) {
-            $msg = sprintf('Method %s is unknown for service %s.', $method, $service->getName());
+            $msg = sprintf('Method "%s" is unknown for service %s.', $methodName, $service->getName());
             throw new TwirpError($msg, TwirpError::BAD_ROUTE);
         }
 
