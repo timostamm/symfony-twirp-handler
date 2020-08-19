@@ -7,8 +7,13 @@
     "php": "^7.1",
     "google/protobuf": "^3.10",
     "symfony/property-info": ">=4",
-    "symfony/event-dispatcher": "^5.1",
-    "symfony/http-kernel": "^5.1"
+    "symfony/event-dispatcher": ">=4",
+    "symfony/http-kernel": ">=4",
+    "symfony/http-foundation": ">=4.3",
+    "psr/container": "^1.0"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^7.3"
   },
   "suggest": {
     "ext-bcmath": "Need to support JSON deserialization",
@@ -26,11 +31,5 @@
       "SymfonyTwirpHandler\\": "tests/SymfonyTwirpHandler",
       "Example\\": "out-php/Example"
     }
-  },
-  "require-dev": {
-    "phpunit/phpunit": "^7.3",
-    "symfony/http-foundation": "^4.3",
-    "psr/log": "^1.1",
-    "psr/container": "^1.0"
   }
 }
