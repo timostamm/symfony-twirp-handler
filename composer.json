@@ -18,12 +18,12 @@
   },
   "autoload": {
     "psr-4": {
-      "SymfonyTwirpHandler\\": "src/"
+      "SymfonyTwirpHandler\\": "src/SymfonyTwirpHandler"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "SymfonyTwirpHandler\\": "tests/",
+      "SymfonyTwirpHandler\\": "tests/SymfonyTwirpHandler",
       "Example\\": "out-php/Example"
     }
   },

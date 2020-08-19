@@ -1,12 +1,10 @@
-Protobuf RPC over HTTP 1 - PHP server
-=====================================
+Symfony Twirp Handler
+=====================
 
 
-PHP utilities to implement protobuf services on a simple HTTP server.
+Helps implementing Twirp in a Symfony application. 
 
-Supports all unary RPC calls over HTTP 1. 
 
-For auto-generated clients, see https://github.com/timostamm/protoc-h1-plugins
 
 
 Lets say you have this service defined in a proto file:
@@ -25,12 +23,12 @@ From this file, protoc generates a generic service interface
 `SearchServiceInterface.php`. You just implement this interface with your 
 business logic. 
 
-Then you can let `HttpHandler` take care of request and response:  
+Then you can let `TwirpHandler` take care of request and response:  
 
 
 ```php
 /**
- * @Route( methods={"PUT"}, path="{serviceName}/{methodName}" )
+ * @Route( path="twirp/{serviceName}/{methodName}" )
  */
 public function execute(RequestInterface $request, string $serviceName, string $methodName): Response
 {
@@ -41,15 +39,23 @@ public function execute(RequestInterface $request, string $serviceName, string $
         new SearchService() // your implementation of the interface
     );
 
-    $handler = new HttpHandler($resolver);
-
-    // turn on details in error messages
-    $handler->setDebug(true); 
-
-    // will log exception details, regardless of debug mode
-    $handler->setLogger($myPsrLogger); 
+    $handler = new TwirpHandler($resolver);
 
     return $handler->handle($serviceName, $methodName, $request);
 }
 ```
 
+Twirp has its own error format. To convert exceptions (by the security 
+firewall or from within your service implementation), you can use the 
+`TwirpErrorSubscriber`: 
+
+```yaml
+// services.yaml
+SymfonyTwirp\TwirpErrorSubscriber:
+    arguments:
+        $requestTagAttribute: "_request_id"
+        $debug: '%kernel.debug%'
+        $prefix: "api"twirp
+```
+
+For documentation about the arguments, check the PHPdoc of `TwirpErrorSubscriber`.

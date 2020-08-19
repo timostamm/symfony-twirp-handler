@@ -5,8 +5,6 @@ namespace SymfonyTwirpHandler;
 
 
 use Exception;
-use Psr\Log\LoggerInterface;
-use Psr\Log\NullLogger;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,9 +17,6 @@ class TwirpHandler
     /** @var ServiceResolver */
     private $resolver;
 
-    /** @var LoggerInterface */
-    private $logger;
-
     /**
      * ServiceHandler constructor.
      * @param ServiceResolver $serviceResolver
@@ -29,7 +24,6 @@ class TwirpHandler
     public function __construct(ServiceResolver $serviceResolver)
     {
         $this->resolver = $serviceResolver;
-        $this->logger = new NullLogger();
     }
 
 

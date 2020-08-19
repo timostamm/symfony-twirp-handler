@@ -6,9 +6,9 @@ test: protoc
 
 
 protoc: $(protos)
-	@find out-$@ ! -path out-$@ ! -name '.gitignore' -exec rm -rf {} +
-	@protoc --proto_path=protos --$@_out=out-$@ $^
-	@echo generated $@
+	@find out-php ! -path out-php ! -name '.gitignore' -exec rm -rf {} +
+	@protoc --proto_path=protos --php_out=out-php $^
+	@echo generated .php from .proto
 
 
 release: test

@@ -20,25 +20,10 @@ use Throwable;
 
 
 /**
- * Class ExceptionFormatterSubscriber
+ * Handles the TwirpError exception, all Exceptions implementing
+ * HttpExceptionInterface, and Throwable.
  *
- * Formats exceptions thrown during a request in a format
- * that is accepted by the client.
- *
- * All Exceptions implementing HttpExceptionInterface are
- * treated as "public". This means that the exception message
- * will be delivered to the client and should be safe to show
- * to the user.
- *
- * All other exceptions are treated as "private". This means
- * that only a generic error message is delivered to the client.
- *
- * In debug-mode, the full exception stack trace is sent to the
- * client.
- *
- * This subscriber works together with the RequestTagger.
- *
- * @package App\EventSubscriber
+ * Sets a JsonResponse that contains proper Twirp error data.
  */
 class TwirpErrorSubscriber implements EventSubscriberInterface
 {
@@ -66,11 +51,32 @@ class TwirpErrorSubscriber implements EventSubscriberInterface
         );
     }
 
-    private ?string $requestTagAttribute;
-    private bool $debug;
-    private string $prefix;
+    /** @var string|null */
+    private $requestTagAttribute;
+
+    /** @var bool */
+    private $debug;
+
+    /** @var string */
+    private $prefix;
 
 
+    /**
+     * TwirpErrorSubscriber constructor.
+     *
+     * If you provide a $requestTagAttribute, the subscriber will look for a
+     * request attribute with this name, and add it as "meta.request_tag".
+     *
+     * If you supply $debug = true, the stack trace of the exception is
+     * added as "meta.stack".
+     *
+     * If the request URI path does not start with $prefix, the subscriber
+     * will not process this request.
+     *
+     * @param string|null $requestTagAttribute
+     * @param bool $debug
+     * @param string $prefix
+     */
     public function __construct(string $requestTagAttribute = null, bool $debug = false, string $prefix = "twirp")
     {
         $this->requestTagAttribute = $requestTagAttribute;
