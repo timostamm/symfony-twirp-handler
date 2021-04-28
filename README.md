@@ -57,3 +57,43 @@ SymfonyTwirp\TwirpErrorSubscriber:
 ```
 
 For documentation about the arguments, check the PHPdoc of `TwirpErrorSubscriber`.
+
+
+### Even simpler alternative
+
+If the `ServiceResolver` and `TwirpHandler` is too much overhead for you, you can 
+also implement your RPC methods as regular controller methods. 
+
+Just use the `TwirpControllerTrait`:
+
+```php
+/**
+ * @Route("/twirp/SearchService")
+ */
+class SearchServiceController
+{
+    
+    use TwirpControllerTrait;
+
+    /**
+     * @Route("/MakeHat")
+     */
+    public function makeHat(Request $request): Response
+    {
+        /** @var SearchRequest $input */
+        $input = $this->readTwirp($request, SearchRequest::class);
+        // ...
+        
+        $output = new SearchResponse();
+        // ...
+
+        return $this->writeTwirp($request, $output);
+    }
+
+}
+```
+
+Note that you have to manually set the correct `@Route` annotations and pick the 
+correct message classes for input and output yourself.
+
+Note that you should still use the `TwirpErrorSubscriber`.
