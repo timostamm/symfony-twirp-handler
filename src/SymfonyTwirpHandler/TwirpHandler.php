@@ -88,8 +88,7 @@ class TwirpHandler
         } catch (TwirpError $exception) {
             throw $exception;
         } catch (Throwable $throwable) {
-            $msg = "Internal service error";
-            throw new TwirpError($msg, TwirpError::INTERNAL, [], $throwable);
+            throw new TwirpError($throwable->getMessage(), TwirpError::INTERNAL, [], $throwable);
         }
 
         // serialize response
