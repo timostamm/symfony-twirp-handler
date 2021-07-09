@@ -150,7 +150,7 @@ class TwirpHandlerTest extends TestCase
             'text' => 'foo'
         ]);
         $this->expectException(TwirpError::class);
-        $this->expectExceptionMessage('Internal service error');
+        $this->expectExceptionMessage('search exception');
         $resolver = new ServiceResolver();
         $resolver->registerInstance(SearchServiceInterface::class, new SearchServiceException());
         $handler = new TwirpHandler($resolver);
