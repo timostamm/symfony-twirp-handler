@@ -23,7 +23,7 @@ class TwirpHandlerTest extends TestCase
     private $logger;
 
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $resolver = new ServiceResolver();
         $resolver->registerInstance(SearchServiceInterface::class, new SearchService());

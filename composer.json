@@ -4,7 +4,7 @@
   "description": "Helps implementing Twirp in a Symfony application",
   "license": "MIT",
   "require": {
-    "php": "^7.1",
+    "php": ">=7.1",
     "google/protobuf": "^3.10",
     "symfony/property-info": ">=4",
     "symfony/event-dispatcher": ">=4",
@@ -13,7 +13,7 @@
     "psr/container": "^1.0"
   },
   "require-dev": {
-    "phpunit/phpunit": "^7.3"
+    "phpunit/phpunit": "^9.5"
   },
   "suggest": {
     "ext-bcmath": "Need to support JSON deserialization",
